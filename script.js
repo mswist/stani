@@ -104,7 +104,10 @@
 
       tile.addEventListener('click', () => onTileClick(positionIndex));
       tile.addEventListener('keydown', (e) => onTileKeydown(e, positionIndex));
-
+      tile.addEventListener('touchstart', (e) => {
+  e.preventDefault(); // Prevents scrolling on touch devices
+  onTileClick(positionIndex);
+}, { passive: false });
       puzzleEl.appendChild(tile);
     });
 
@@ -183,4 +186,5 @@
   moveCount = 0;
   updateMovesDisplay();
 })();
+
 
