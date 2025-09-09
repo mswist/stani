@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3x3 Sliding Puzzle</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" as="image" href="picture.jpg">
+  <meta name="color-scheme" content="light dark">
+  <style>
+    /* Fallback minimal styles if styles.css fails to load */
+    .container { display: grid; gap: 12px; justify-content: center; padding: 24px; }
+    .controls { display: flex; gap: 8px; align-items: center; justify-content: center; }
+    button { padding: 8px 12px; cursor: pointer; }
+  </style>
+  
+  <!-- Ensures the image exists before initializing the puzzle -->
+  <link rel="preload" href="picture.jpg" as="image">
+</head>
+<body>
+  <div class="container">
+    <h1>3x3 Sliding Puzzle</h1>
+    <div class="controls">
+      <button id="shuffleBtn" type="button">Shuffle</button>
+      <button id="resetBtn" type="button">Reset</button>
+      <span id="moves">Moves: 0</span>
+    </div>
+    <div id="puzzle" class="puzzle" aria-label="Sliding puzzle" role="application"></div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
+
