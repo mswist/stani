@@ -51,6 +51,27 @@ function onPuzzleSolved() {
       fullPic.classList.add('visible');
     });
   }
+
+  // Po 5 sekundach fade out obrazka i fade in tekstu
+  setTimeout(() => {
+    if (fullPic) {
+      fullPic.classList.remove('visible');
+    }
+
+    let finalMsg = document.querySelector('.final-message');
+    if (!finalMsg) {
+      finalMsg = document.createElement('div');
+      finalMsg.className = 'final-message';
+      finalMsg.innerHTML = 'A→H<br>RLSSLY';
+      puzzle.appendChild(finalMsg);
+      // Fade in tekstu
+      requestAnimationFrame(() => {
+        finalMsg.classList.add('visible');
+      }); // krótka pauza, by animacja zadziałała
+    }
+  }, 5000); // 2s obrazek + 5s = 7s od wygranej
+
+
 }
 
   function countInversions(arr) {
