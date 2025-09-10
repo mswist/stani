@@ -37,7 +37,7 @@ body {
 .tile {
   width: var(--tile-size);
   height: var(--tile-size);
-  background-image: url("picture.jpg");
+  /* background-image: url("picture.jpg"); usunięte, JS ustawia obrazek */
   background-size: calc(var(--tile-size) * 3) calc(var(--tile-size) * 3);
   border-radius: var(--radius);
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
@@ -87,10 +87,9 @@ button { border: 1px solid #e5e7eb; background: white; color: black; border-radi
   border-radius: calc(var(--radius) + 4px);
   opacity: 0;
   pointer-events: none;
-  background-image: url("picture.jpg");
   background-size: cover;
   background-position: center;
-  transition: opacity 2s;
+  transition: opacity 1s;
   z-index: 10;
 }
 

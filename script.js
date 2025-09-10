@@ -31,7 +31,6 @@
   }
 
   function isSolved(state) {
-    let selectedImage = null; // Initialize selectedImage variable
     for (let i = 0; i < TILE_COUNT; i++) {
       if (state[i] !== i) return false;
     }
@@ -39,12 +38,13 @@
   }
 
   // Przykład: dodaj do obsługi wygranej
-function onPuzzleSolved() {
+  function onPuzzleSolved() {
     document.querySelectorAll('.tile').forEach(tile => tile.style.visibility = 'hidden');
     const puzzle = document.querySelector('.puzzle');
     let fullPic = document.querySelector('.full-picture');
     if (!fullPic) {
       fullPic = document.createElement('div');
+      fullPic.style.backgroundImage = `url('${selectedImage}')`;
       fullPic.className = 'full-picture';
       puzzle.appendChild(fullPic);
       // Dodaj klasę .visible w następnym cyklu, by uruchomić animację
@@ -66,15 +66,15 @@ function onPuzzleSolved() {
         finalMsg.innerHTML = 'RLSSLY<br><small>A→H</small>';
         puzzle.appendChild(finalMsg);
         // Fade in tekstu
-          if (selectedImage) {
-            fullPic.style.backgroundImage = `url('${selectedImage}')`;
-          }
+        if (selectedImage) {
+          fullPic.style.backgroundImage = `url('${selectedImage}')`;
+        }
         requestAnimationFrame(() => {
           finalMsg.classList.add('visible');
         }); // krótka pauza, by animacja zadziałała
       }
     }, 3500); // 2s obrazek + 5s = 7s od wygranej
-}
+  }
 
   function countInversions(arr) {
     // Count inversions excluding the empty tile
@@ -125,6 +125,9 @@ function onPuzzleSolved() {
       // Position background slice according to tile value (original correct position)
       const { row, col } = indexToRowCol(tileValue);
       tile.style.backgroundPosition = `-${col * 100}% -${row * 100}%`;
+      if (selectedImage) {
+        tile.style.backgroundImage = `url('${selectedImage}')`;
+      }
 
       // Optional numeric label
       if (tileValue !== EMPTY) {
@@ -141,15 +144,14 @@ function onPuzzleSolved() {
         tile.style.cursor = 'not-allowed';
       }
 
-      tile.addEventListener('click', () => onTileClick(positionIndex));
+      tile.addEventListener('click', () => {
+        onTileClick(positionIndex);
+      });
       tile.addEventListener('touchstart', (e) => {
         e.preventDefault(); // Prevents scrolling on touch devices
-        if (selectedImage) {
-          tile.style.backgroundImage = `url('${selectedImage}')`;
-        }
         onTileClick(positionIndex);
       }, { passive: false });
-      
+
       puzzleEl.appendChild(tile);
     });
 
@@ -177,24 +179,6 @@ function onPuzzleSolved() {
     tryMove(positionIndex);
   }
 
-  function onTileKeydown(e, positionIndex) {
-    if (isSolved(tiles)) return;
-    const key = e.key;
-    const { row, col } = indexToRowCol(positionIndex);
-
-    let targetIndex = positionIndex;
-    if (key === 'ArrowUp' && row > 0) targetIndex = rowColToIndex(row - 1, col);
-    if (key === 'ArrowDown' && row < BOARD_SIZE - 1) targetIndex = rowColToIndex(row + 1, col);
-    if (key === 'ArrowLeft' && col > 0) targetIndex = rowColToIndex(row, col - 1);
-    if (key === 'ArrowRight' && col < BOARD_SIZE - 1) targetIndex = rowColToIndex(row, col + 1);
-
-    if (targetIndex !== positionIndex) {
-      e.preventDefault();
-      // We want to move the tile in the arrow direction; simulate click on that tile
-      tryMove(targetIndex);
-    }
-  }
-
   function reset() {
     tiles = [...Array(TILE_COUNT).keys()];
     moveCount = 0;
@@ -212,57 +196,41 @@ function onPuzzleSolved() {
   shuffleBtn.addEventListener('click', shuffle);
   // resetBtn.addEventListener('click', reset);
 
-  // Preload image then init
-  const img = new Image();
-  img.onload = () => {
-    document.documentElement.style.setProperty('--image-loaded', '1');
-    //render();
-  };
-  img.onerror = () => {
-    statusEl.textContent = 'Could not load picture.jpg. Make sure it is in this folder.';
-    render();
-  };
-  img.src = window.__PUZZLE_IMAGE__ || 'picture.jpg';
-
-  // Start solved with empty at top-left
-  tiles = [...Array(TILE_COUNT).keys()];
-  // moveCount = 0;
-  // updateMovesDisplay();
-  shuffle()
-})();
-    // Modal wyboru obrazka na start
-    function showImageModal() {
-      const imageModal = document.getElementById('imageModal');
-      const thumbnails = imageModal ? imageModal.querySelectorAll('.thumbnail') : [];
-      imageModal.style.display = 'flex';
-      thumbnails.forEach(thumb => {
-        thumb.classList.remove('selected');
-        thumb.addEventListener('click', () => {
-          thumbnails.forEach(t => t.classList.remove('selected'));
-          thumb.classList.add('selected');
-          selectedImage = thumb.getAttribute('data-img');
-          imageModal.style.display = 'none';
-          startPuzzle();
-        });
-        thumb.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          thumbnails.forEach(t => t.classList.remove('selected'));
-          thumb.classList.add('selected');
-          selectedImage = thumb.getAttribute('data-img');
-          imageModal.style.display = 'none';
-          startPuzzle();
-        }, { passive: false });
+  // Modal wyboru obrazka na start
+  function showImageModal() {
+    const imageModal = document.getElementById('imageModal');
+    const thumbnails = imageModal ? imageModal.querySelectorAll('.thumbnail') : [];
+    imageModal.style.display = 'flex';
+    thumbnails.forEach(thumb => {
+      thumb.classList.remove('selected');
+      thumb.addEventListener('click', () => {
+        thumbnails.forEach(t => t.classList.remove('selected'));
+        thumb.classList.add('selected');
+        selectedImage = thumb.getAttribute('data-img');
+        imageModal.style.display = 'none';
+        startPuzzle();
       });
-    }
+      thumb.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        thumbnails.forEach(t => t.classList.remove('selected'));
+        thumb.classList.add('selected');
+        selectedImage = thumb.getAttribute('data-img');
+        imageModal.style.display = 'none';
+        startPuzzle();
+      }, { passive: false });
+    });
+  }
 
-    function startPuzzle() {
-      tiles = [...Array(TILE_COUNT).keys()];
-      moveCount = 0;
-      updateMovesDisplay();
-      shuffle();
-    }
+  function startPuzzle() {
+    tiles = [...Array(TILE_COUNT).keys()];
+    moveCount = 0;
+    updateMovesDisplay();
+    shuffle();
+  }
 
-    window.addEventListener('DOMContentLoaded', showImageModal);
+
+  window.addEventListener('DOMContentLoaded', showImageModal);
+})();
 
 
 
