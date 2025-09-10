@@ -39,7 +39,6 @@
 
   // Przykład: dodaj do obsługi wygranej
 function onPuzzleSolved() {
-  setTimeout(() => {
     document.querySelectorAll('.tile').forEach(tile => tile.style.visibility = 'hidden');
     const puzzle = document.querySelector('.puzzle');
     let fullPic = document.querySelector('.full-picture');
@@ -71,7 +70,6 @@ function onPuzzleSolved() {
         }); // krótka pauza, by animacja zadziałała
       }
     }, 3500); // 2s obrazek + 5s = 7s od wygranej
-  }, 1000)
 }
 
   function countInversions(arr) {
