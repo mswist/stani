@@ -112,7 +112,7 @@
     });
 
     if (isSolved(tiles)) {
-      statusEl.textContent = 'Solved! Great job!';
+      statusEl.textContent = 'Happy Birthday!!!';
     } else {
       statusEl.textContent = '';
     }
@@ -187,6 +187,7 @@
   // updateMovesDisplay();
   shuffle()
 })();
+
 
 
 
