@@ -125,7 +125,7 @@ button { border: 1px solid #e5e7eb; background: white; color: black; border-radi
   transition: opacity 2s;
 }
 
-.final-message .small {
+.final-message small {
   font-size: 0.4em;
   color: grey;
 }
