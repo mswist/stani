@@ -1,7 +1,7 @@
 :root {
   --tile-size: 120px;
-  --gap: 2px;
-  --radius: 8px;
+  --gap: 1px;
+  --radius: 4px;
   --accent: #2563eb;
 }
 
@@ -63,4 +63,5 @@ button { border: 1px solid #e5e7eb; background: white; color: black; border-radi
 }
 
 .status { min-height: 1.5em; }
+
 
