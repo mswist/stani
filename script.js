@@ -31,6 +31,7 @@
   }
 
   function isSolved(state) {
+    let selectedImage = null; // Initialize selectedImage variable
     for (let i = 0; i < TILE_COUNT; i++) {
       if (state[i] !== i) return false;
     }
@@ -65,6 +66,9 @@ function onPuzzleSolved() {
         finalMsg.innerHTML = 'RLSSLY<br><small>A→H</small>';
         puzzle.appendChild(finalMsg);
         // Fade in tekstu
+          if (selectedImage) {
+            fullPic.style.backgroundImage = `url('${selectedImage}')`;
+          }
         requestAnimationFrame(() => {
           finalMsg.classList.add('visible');
         }); // krótka pauza, by animacja zadziałała
@@ -140,6 +144,9 @@ function onPuzzleSolved() {
       tile.addEventListener('click', () => onTileClick(positionIndex));
       tile.addEventListener('touchstart', (e) => {
         e.preventDefault(); // Prevents scrolling on touch devices
+        if (selectedImage) {
+          tile.style.backgroundImage = `url('${selectedImage}')`;
+        }
         onTileClick(positionIndex);
       }, { passive: false });
       
@@ -223,6 +230,39 @@ function onPuzzleSolved() {
   // updateMovesDisplay();
   shuffle()
 })();
+    // Modal wyboru obrazka na start
+    function showImageModal() {
+      const imageModal = document.getElementById('imageModal');
+      const thumbnails = imageModal ? imageModal.querySelectorAll('.thumbnail') : [];
+      imageModal.style.display = 'flex';
+      thumbnails.forEach(thumb => {
+        thumb.classList.remove('selected');
+        thumb.addEventListener('click', () => {
+          thumbnails.forEach(t => t.classList.remove('selected'));
+          thumb.classList.add('selected');
+          selectedImage = thumb.getAttribute('data-img');
+          imageModal.style.display = 'none';
+          startPuzzle();
+        });
+        thumb.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          thumbnails.forEach(t => t.classList.remove('selected'));
+          thumb.classList.add('selected');
+          selectedImage = thumb.getAttribute('data-img');
+          imageModal.style.display = 'none';
+          startPuzzle();
+        }, { passive: false });
+      });
+    }
+
+    function startPuzzle() {
+      tiles = [...Array(TILE_COUNT).keys()];
+      moveCount = 0;
+      updateMovesDisplay();
+      shuffle();
+    }
+
+    window.addEventListener('DOMContentLoaded', showImageModal);
 
 
 
