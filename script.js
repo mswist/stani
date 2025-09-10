@@ -5,7 +5,7 @@
 
   const puzzleEl = document.getElementById('puzzle');
   const shuffleBtn = document.getElementById('shuffleBtn');
-  const resetBtn = document.getElementById('resetBtn');
+  // const resetBtn = document.getElementById('resetBtn');
   const movesEl = document.getElementById('moves');
   const statusEl = document.getElementById('status');
 
@@ -167,7 +167,7 @@
   }
 
   shuffleBtn.addEventListener('click', shuffle);
-  resetBtn.addEventListener('click', reset);
+  // resetBtn.addEventListener('click', reset);
 
   // Preload image then init
   const img = new Image();
@@ -186,6 +186,7 @@
   moveCount = 0;
   updateMovesDisplay();
 })();
+
 
 
 
