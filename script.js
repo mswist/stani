@@ -173,7 +173,7 @@
   const img = new Image();
   img.onload = () => {
     document.documentElement.style.setProperty('--image-loaded', '1');
-    render();
+    //render();
   };
   img.onerror = () => {
     statusEl.textContent = 'Could not load picture.jpg. Make sure it is in this folder.';
@@ -183,9 +183,11 @@
 
   // Start solved with empty at top-left
   tiles = [...Array(TILE_COUNT).keys()];
-  moveCount = 0;
-  updateMovesDisplay();
+  // moveCount = 0;
+  // updateMovesDisplay();
+  shuffle()
 })();
+
 
 
 
