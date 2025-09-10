@@ -91,7 +91,7 @@
       if (tileValue !== EMPTY) {
         const label = document.createElement('span');
         label.textContent = String(tileValue + 1);
-        label.style.padding = '6px 8px';
+        // label.style.padding = '6px 8px';
         tile.appendChild(label);
       }
 
@@ -103,11 +103,11 @@
       }
 
       tile.addEventListener('click', () => onTileClick(positionIndex));
-      tile.addEventListener('keydown', (e) => onTileKeydown(e, positionIndex));
       tile.addEventListener('touchstart', (e) => {
-  e.preventDefault(); // Prevents scrolling on touch devices
-  onTileClick(positionIndex);
-}, { passive: false });
+        e.preventDefault(); // Prevents scrolling on touch devices
+        onTileClick(positionIndex);
+      }, { passive: false });
+      
       puzzleEl.appendChild(tile);
     });
 
@@ -186,5 +186,6 @@
   moveCount = 0;
   updateMovesDisplay();
 })();
+
 
 
