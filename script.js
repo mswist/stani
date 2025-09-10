@@ -69,7 +69,7 @@ function onPuzzleSolved() {
         finalMsg.classList.add('visible');
       }); // krótka pauza, by animacja zadziałała
     }
-  }, 5000); // 2s obrazek + 5s = 7s od wygranej
+  }, 3500); // 2s obrazek + 5s = 7s od wygranej
 
 
 }
