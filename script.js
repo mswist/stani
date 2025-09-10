@@ -39,19 +39,16 @@
 
   // Przykład: dodaj do obsługi wygranej
 function onPuzzleSolved() {
-  setTimeout(() => {
-    const puzzle = document.querySelector('.puzzle');
-    let fullPic = document.querySelector('.full-picture');
-    if (!fullPic) {
-      fullPic = document.createElement('div');
-      fullPic.className = 'full-picture';
-      puzzle.appendChild(fullPic);
-    }
-    // Fade in
-    fullPic.classList.add('visible');
-    // Opcjonalnie: ukryj kafelki
-    document.querySelectorAll('.tile').forEach(tile => tile.style.visibility = 'hidden');
-  }, 2000);
+  document.querySelectorAll('.tile').forEach(tile => tile.style.visibility = 'hidden');
+  const puzzle = document.querySelector('.puzzle');
+  let fullPic = document.querySelector('.full-picture');
+  if (!fullPic) {
+    fullPic = document.createElement('div');
+    fullPic.className = 'full-picture';
+    puzzle.appendChild(fullPic);
+  }
+  // Fade in
+  fullPic.classList.add('visible');
 }
 
   function countInversions(arr) {
