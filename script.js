@@ -46,9 +46,11 @@ function onPuzzleSolved() {
     fullPic = document.createElement('div');
     fullPic.className = 'full-picture';
     puzzle.appendChild(fullPic);
+    // Dodaj klasę .visible w następnym cyklu, by uruchomić animację
+    requestAnimationFrame(() => {
+      fullPic.classList.add('visible');
+    });
   }
-  // Fade in
-  fullPic.classList.add('visible');
 }
 
   function countInversions(arr) {
