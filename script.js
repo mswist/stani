@@ -39,39 +39,39 @@
 
   // Przykład: dodaj do obsługi wygranej
 function onPuzzleSolved() {
-  document.querySelectorAll('.tile').forEach(tile => tile.style.visibility = 'hidden');
-  const puzzle = document.querySelector('.puzzle');
-  let fullPic = document.querySelector('.full-picture');
-  if (!fullPic) {
-    fullPic = document.createElement('div');
-    fullPic.className = 'full-picture';
-    puzzle.appendChild(fullPic);
-    // Dodaj klasę .visible w następnym cyklu, by uruchomić animację
-    requestAnimationFrame(() => {
-      fullPic.classList.add('visible');
-    });
-  }
-
-  // Po 5 sekundach fade out obrazka i fade in tekstu
   setTimeout(() => {
-    if (fullPic) {
-      fullPic.classList.remove('visible');
-    }
-
-    let finalMsg = document.querySelector('.final-message');
-    if (!finalMsg) {
-      finalMsg = document.createElement('div');
-      finalMsg.className = 'final-message';
-      finalMsg.innerHTML = 'RLSSLY<br><small>A→H</small>';
-      puzzle.appendChild(finalMsg);
-      // Fade in tekstu
+    document.querySelectorAll('.tile').forEach(tile => tile.style.visibility = 'hidden');
+    const puzzle = document.querySelector('.puzzle');
+    let fullPic = document.querySelector('.full-picture');
+    if (!fullPic) {
+      fullPic = document.createElement('div');
+      fullPic.className = 'full-picture';
+      puzzle.appendChild(fullPic);
+      // Dodaj klasę .visible w następnym cyklu, by uruchomić animację
       requestAnimationFrame(() => {
-        finalMsg.classList.add('visible');
-      }); // krótka pauza, by animacja zadziałała
+        fullPic.classList.add('visible');
+      });
     }
-  }, 3500); // 2s obrazek + 5s = 7s od wygranej
 
+    // Po 5 sekundach fade out obrazka i fade in tekstu
+    setTimeout(() => {
+      if (fullPic) {
+        fullPic.classList.remove('visible');
+      }
 
+      let finalMsg = document.querySelector('.final-message');
+      if (!finalMsg) {
+        finalMsg = document.createElement('div');
+        finalMsg.className = 'final-message';
+        finalMsg.innerHTML = 'RLSSLY<br><small>A→H</small>';
+        puzzle.appendChild(finalMsg);
+        // Fade in tekstu
+        requestAnimationFrame(() => {
+          finalMsg.classList.add('visible');
+        }); // krótka pauza, by animacja zadziałała
+      }
+    }, 3500); // 2s obrazek + 5s = 7s od wygranej
+  }, 1000)
 }
 
   function countInversions(arr) {
