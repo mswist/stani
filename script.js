@@ -62,7 +62,7 @@ function onPuzzleSolved() {
     if (!finalMsg) {
       finalMsg = document.createElement('div');
       finalMsg.className = 'final-message';
-      finalMsg.innerHTML = 'A→H<br>RLSSLY';
+      finalMsg.innerHTML = 'RLSSLY<br><small>A→H</small>';
       puzzle.appendChild(finalMsg);
       // Fade in tekstu
       requestAnimationFrame(() => {
